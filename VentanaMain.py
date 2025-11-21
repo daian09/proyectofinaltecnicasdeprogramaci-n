@@ -23,7 +23,7 @@ def Boton4():
 root = tk.Tk()
 root.title("Analisis de gastos en salud")
 root.geometry("500x400")
-
+root.resizable(False, False) #con esto se bloquea la posibilidad de maximizar la ventana
 try:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     ruta_imagen = os.path.join(BASE_DIR, "salud-financiera.png")
