@@ -2,7 +2,7 @@ import tkinter as tk
 import pandas as pd
 from tkinter import messagebox
 
-print(">>> AddRegistro cargado desde:", __file__)
+print(">>> AddRegistro cargado desde:", __file__) # Indica la ruta del archivo cargado
 
 def Add_Registro():
     New_Reg = tk.Toplevel()
@@ -10,7 +10,7 @@ def Add_Registro():
     New_Reg.geometry("520x580")
     New_Reg.resizable(False, False)
 
-    # ------------------- FUNCIÓN GUARDAR -------------------
+   
     def guardar():
         # Capturar datos con validación básica
         try:
@@ -28,8 +28,7 @@ def Add_Registro():
         except:
             messagebox.showerror("Error", "Verifique que los campos numéricos contengan valores válidos.")
             return
-
-        # ---------------- CONFIRMACIÓN SIMPLE ----------------
+        # Confirmar guardado
         confirmar = messagebox.askyesno(
             "Confirmar guardado",
             "¿Desea guardar este registro?"
@@ -38,7 +37,7 @@ def Add_Registro():
         if not confirmar:
             return
 
-        # ---------------- GUARDAR EN EXCEL ----------------
+        # Guardar en Excel
         try:
             df = pd.read_excel("base_datos_salud_procesada.xlsx")
             df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
@@ -50,7 +49,7 @@ def Add_Registro():
         except Exception as e:
             messagebox.showerror("Error", f"No se pudo guardar el registro:\n{e}")
 
-    # ------------------- LABELS Y ENTRADAS -------------------
+    # campos de entrada
     labels_es = [
         "País",
         "Código ISO (ej: COL, USA)",
@@ -64,7 +63,7 @@ def Add_Registro():
     ]
 
     entries = []
-
+# Crear etiquetas y campos de entrada
     for i, lbl in enumerate(labels_es):
         tk.Label(New_Reg, text=lbl, anchor="w").grid(
             row=i, column=0, padx=10, pady=10, sticky="w"
@@ -72,7 +71,7 @@ def Add_Registro():
         entry = tk.Entry(New_Reg, width=35)
         entry.grid(row=i, column=1, padx=10, pady=10)
         entries.append(entry)
-
+# Asignar entradas a variables individuales
     (entry_country,
      entry_iso,
      entry_year,
@@ -83,7 +82,7 @@ def Add_Registro():
      entry_pocket,
      entry_life) = entries
 
-    # ------------------- BOTONES -------------------
+    # Botones de guardar y cancelar
     tk.Button(New_Reg, text="Guardar Registro", width=20, height=2, command=guardar)\
         .grid(row=len(labels_es), column=0, padx=10, pady=20)
 
