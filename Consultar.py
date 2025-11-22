@@ -10,14 +10,14 @@ def Consultar_Registro():
     New_Reg.geometry("500x500")
     New_Reg.resizable(False, False)
 
-    # ---------- CARGAR DATAFRAME ----------
+    # cargar base de datos
     try:
         df = pd.read_excel("base_datos_salud_procesada.xlsx")
     except:
         messagebox.showerror("Error", "No se pudo cargar la base de datos.")
         return
 
-    # ---------- CARGAR IMAGEN ----------
+    # cargar imagen
     try:
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         ruta_imagen = os.path.join(BASE_DIR, "busqueda-de-lupa.png")
@@ -33,20 +33,20 @@ def Consultar_Registro():
     except:
         tk.Label(New_Reg, text="No se encontró la imagen").pack(pady=5)
 
-    # ---------- LABEL Y ENTRY DE BÚSQUEDA ----------
+    # elementos de búsqueda
     tk.Label(New_Reg, text="Escriba País o ISO:", font=("Arial", 11)).pack(pady=5)
     entry_busqueda = tk.Entry(New_Reg, width=40)
     entry_busqueda.pack(pady=5)
 
-    # ---------- LISTA DE RESULTADOS ----------
+    # listbox para mostrar resultados
     lista = tk.Listbox(New_Reg, width=50, height=10)
     lista.pack(pady=10)
 
-    # ---------- LABEL DONDE SE MOSTRARÁ LA INFO ----------
+    # label para mostrar información detallada
     info = tk.Label(New_Reg, text="", justify="left", anchor="w", font=("Arial", 10))
     info.pack(pady=10)
 
-    # ---------- FUNCIÓN PARA ACTUALIZAR RESULTADOS ----------
+    # función para actualizar la lista de resultados
     def actualizar_lista(event=None):
         lista.delete(0, tk.END)
         texto = entry_busqueda.get().strip()
@@ -65,7 +65,7 @@ def Consultar_Registro():
     # Actualizar lista automáticamente al escribir
     entry_busqueda.bind("<KeyRelease>", actualizar_lista)
 
-    # ---------- MOSTRAR DETALLE DEL REGISTRO SELECCIONADO ----------
+    #mostrar detalle del registro seleccionado
     def mostrar_detalle(event=None):
         seleccion = lista.curselection()
         if not seleccion:
@@ -94,7 +94,7 @@ def Consultar_Registro():
     # Evento al seleccionar en la lista
     lista.bind("<<ListboxSelect>>", mostrar_detalle)
 
-    # ---------- BOTÓN DE VOLVER ----------
+    # botón para volver 
     tk.Button(New_Reg, text="Volver al menú principal", width=30, command=New_Reg.destroy)\
         .pack(pady=15)
 
